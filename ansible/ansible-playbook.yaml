@@ -7,3 +7,25 @@
     package: 
       name: git
       state: present
+
+  - name: Installing Multiple Packages
+    package: 
+      state: present
+      name: 
+        - java
+        - maven
+
+- name: Installing Package and Starting a Service
+  hosts: master
+
+  tasks: 
+  - name: Install NTP Package
+    package:
+      name: ntp
+      state: present
+
+  - name: Starting NTPD Service
+    service: 
+      name: ntpd
+      state: started
+      enabled: yes
