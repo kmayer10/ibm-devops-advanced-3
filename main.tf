@@ -1,5 +1,5 @@
 #Configruing a Provider
-provider "aws" {
+/*provider "aws" {
 	region = "us-east-1"
 }
 
@@ -47,8 +47,6 @@ resource "aws_instance" "centos_micro_1" {
 	}
 }
 
-# Creating CENTOS 7 Server
-
 resource "aws_instance" "centos_micro" {
 	ami = "ami-030ff268bd7b4e8b5"
 	instance_type = var.instance_type
@@ -59,7 +57,6 @@ resource "aws_instance" "centos_micro" {
 		aws_security_group.centos_security_group.name
 	]
 	
-	# Remote working Provisioner
 	provisioner "remote-exec" {
 		connection {
 			type = "ssh"
@@ -103,4 +100,4 @@ resource "aws_security_group" "centos_security_group" {
 		cidr_blocks = ["0.0.0.0/0"]
 	}
 	
-} 
+}*/ 
