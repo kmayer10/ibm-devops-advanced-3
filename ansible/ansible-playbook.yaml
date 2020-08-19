@@ -1,0 +1,88 @@
+---
+- name: Files & Directory Related Tasks 7 Modules
+  hosts: all
+  
+  tasks: 
+  - name: Checking for Directory
+    file: 
+      path: /tmp/demo
+      state: directory
+      mode: 755
+  - name: creating empty file
+    file: 
+      path: /tmp/demo/devops
+      state: touch
+      owner: kubeclient
+      group: users
+    when: inventory_hostname in groups['nodes']
+  - name: Sending File from Master to Node
+    copy: 
+      src: demo.sh
+      dest: /tmp/demo/
+      mode: 755
+    notify: 
+      - listing
+      - date
+  - name: Running Script on Node
+    shell: sh /root/demo.sh {{ var1 }} && date && ping -c 4 google.com
+    register: output
+    when: ansible_hostname == "ansible_node"
+  - name: Printing Previous Task Output
+    debug: var=output.stdout_lines
+  - name: Sending File from Node to Node
+    copy:
+      src: /tmp/demo/demo.sh
+      dest: /root/
+      remote_src: yes
+      mode: 755
+  - name: Copying from Node to Master
+    fetch: 
+      src: /root/out.txt
+      dest: out.txt
+      flat: yes
+    when: ansible_hostname == "ansible_node"
+  handlers: 
+  - name: listing
+    shell: ls -ltr /tmp/demo/
+  - name: date
+    shell: date
+    
+- name: Creating User
+  hosts: nodes
+  
+  tasks: 
+  - name: Creating User
+    user: 
+      name: kubeclient
+      state: present
+
+- name: Installing Packages
+  hosts: all
+
+  tasks: 
+  - name: Install GIT
+    package: 
+      name: git
+      state: present
+
+  - name: Installing Multiple Packages
+    package: 
+      state: present
+      name: 
+        - java
+        - maven
+
+- name: Installing Package and Starting a Service
+  hosts: master
+
+  tasks: 
+  - name: Install NTP Package
+    package:
+      name: ntp
+      state: present
+
+  - name: Starting NTPD Service
+    service: 
+      name: ntpd
+      state: started
+      enabled: yes

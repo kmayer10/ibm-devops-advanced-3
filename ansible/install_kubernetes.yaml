@@ -1,0 +1,6 @@
+---
+- name: Installing K8S
+  hosts: all
+
+  roles: 
+  - docker

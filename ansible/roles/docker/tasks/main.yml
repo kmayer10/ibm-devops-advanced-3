@@ -1,0 +1,7 @@
+---
+# tasks file for docker
+- import_tasks: install_required_packages.yaml
+- import_tasks: adding_docker_repo.yaml
+- import_tasks: install_docker.yaml
+- import_tasks: adding_daemon_json.yaml
+- import_tasks: start_docker.yaml

@@ -1,0 +1,7 @@
+- name: Install Docker
+  package:
+    name: 
+      - "{{ dockerceversion }}"
+      - "{{ dockercliversion }}"
+      - "{{ containerdioversion }}"
+    state: present

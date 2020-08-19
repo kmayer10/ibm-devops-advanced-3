@@ -1,0 +1,13 @@
+- name: Creating Docker folder
+  file: 
+    path: /etc/docker
+    state: directory
+    mode: 755
+        
+- name: Copy Docker deamon file
+  copy: 
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    mode: 755
+  notify:
+  - restart_docker

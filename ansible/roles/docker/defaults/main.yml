@@ -1,0 +1,6 @@
+---
+# defaults file for docker
+
+dockerceversion: docker-ce-19.03.11
+dockercliversion: docker-ce-19.03.11
+containerdioversion: containerd.io-1.2.13
