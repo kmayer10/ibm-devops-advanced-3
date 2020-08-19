@@ -20,7 +20,10 @@
       dest: /tmp/demo/
       mode: 755
   - name: Running Script on Node
-    shell: sh /root/demo.sh
+    shell: sh /root/demo.sh && date && ping -c 4 google.com
+    register: output
+  - name: Printing Previous Task Output
+    debug: var=output.stdout_lines
   - name: Sending File from Node to Node
     copy:
       src: /tmp/demo/demo.sh
