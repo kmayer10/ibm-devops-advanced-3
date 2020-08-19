@@ -23,7 +23,7 @@
       - listing
       - date
   - name: Running Script on Node
-    shell: sh /root/demo.sh && date && ping -c 4 google.com
+    shell: sh /root/demo.sh {{ var1 }} && date && ping -c 4 google.com
     register: output
   - name: Printing Previous Task Output
     debug: var=output.stdout_lines

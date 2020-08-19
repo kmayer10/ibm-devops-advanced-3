@@ -4,3 +4,5 @@ echo "This is for handlers demo"
 date
 date
 date
+
+echo $1
