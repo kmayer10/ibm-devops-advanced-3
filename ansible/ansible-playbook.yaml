@@ -1,4 +1,20 @@
 ---
+- name: Files & Directory Related Tasks 7 Modules
+  hosts: nodes
+  
+  tasks: 
+  - name: Checking for Directory
+    file: 
+      path: /tmp/demo
+      state: directory
+      mode: 755
+  - name: creating empty file
+    file: 
+      path: /tmp/demo/devops
+      state: touch
+      owner: kubeclient
+      group: users
+  
 - name: Creating User
   hosts: nodes
   
