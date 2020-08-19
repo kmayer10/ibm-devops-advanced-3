@@ -14,7 +14,7 @@ variable "sg_name" {
 	default = "demo"
 }
 
-resource "aws_instance" "ansible-master" {
+resource "aws_instance" "ansible_master" {
 	ami = "ami-030ff268bd7b4e8b5"
 	instance_type = "t2.medium"
 	
@@ -29,15 +29,15 @@ resource "aws_instance" "ansible-master" {
 		inline = [
 			"hostnamectl set-hostname ansible-master",
 			"yum install -y epel-release",
-			"yum install -y ansible git",
+			"yum install -y ansible git unzip wget",
 			"git clone https://github.com/kmayer10/ibm-devops-advanced-3.git /root/devops",
-			"cp -R /root/devops/ansible/roles/* /etc/ansible/roles/,
+			"cp -R /root/devops/ansible/roles/* /etc/ansible/roles/",
 			"mv /etc/ansible/ansible.cfg /etc/ansible/ansible.cfg_old",
-			"cp -R /root/devops/ansible/ansible.cfg /etc/ansible/ansible.cfg,
+			"cp -R /root/devops/ansible/ansible.cfg /etc/ansible/ansible.cfg",
 			"mv /etc/ansible/hosts /etc/ansible/hosts_old",
 			"echo '[master]' > /etc/ansible/hosts",
 			"echo '${self.private_ip}' >> /etc/ansible/hosts",
-			"echo '[nodes]' >> /etc/ansible/hosts"
+			"echo '[worker]' >> /etc/ansible/hosts"
 		]
 	}
 
