@@ -32,6 +32,8 @@ resource "aws_instance" "ansible_master" {
 			"yum install -y ansible git",
 			"git clone https://github.com/kmayer10/ibm-devops-advanced-3.git /root/devops",
 			"cp -R /root/devops/ansible/roles/* /etc/ansible/roles/,
+			"mv /etc/ansible/ansible.cfg /etc/ansible/ansible.cfg_old",
+			"cp -R /root/devops/ansible/ansible.cfg /etc/ansible/ansible.cfg,
 			"mv /etc/ansible/hosts /etc/ansible/hosts_old",
 			"echo '[master]' > /etc/ansible/hosts",
 			"echo '${self.private_ip}' >> /etc/ansible/hosts",
