@@ -14,6 +14,17 @@
       state: touch
       owner: kubeclient
       group: users
+  - name: Sending File from Master to Node
+    copy: 
+      src: demo.sh
+      dest: /tmp/demo/
+      mode: 755
+  - name: Sending File from Node to Node
+    copy:
+      src: /tmp/demo/demo.sh
+      dest: /root/
+      remote_src: yes
+      mode: 755
   
 - name: Creating User
   hosts: nodes
