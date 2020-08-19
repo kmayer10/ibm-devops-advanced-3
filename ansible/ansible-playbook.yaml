@@ -1,6 +1,6 @@
 ---
 - name: Files & Directory Related Tasks 7 Modules
-  hosts: nodes
+  hosts: all
   
   tasks: 
   - name: Checking for Directory
@@ -14,6 +14,7 @@
       state: touch
       owner: kubeclient
       group: users
+    when: inventory_hostname in groups['nodes']
   - name: Sending File from Master to Node
     copy: 
       src: demo.sh
@@ -25,6 +26,7 @@
   - name: Running Script on Node
     shell: sh /root/demo.sh {{ var1 }} && date && ping -c 4 google.com
     register: output
+    when: ansible_hostname == "ansible_node"
   - name: Printing Previous Task Output
     debug: var=output.stdout_lines
   - name: Sending File from Node to Node
@@ -38,7 +40,7 @@
       src: /root/out.txt
       dest: out.txt
       flat: yes
-
+    when: ansible_hostname == "ansible_node"
   handlers: 
   - name: listing
     shell: ls -ltr /tmp/demo/
