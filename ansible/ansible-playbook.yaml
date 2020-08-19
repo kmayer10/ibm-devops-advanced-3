@@ -19,6 +19,9 @@
       src: demo.sh
       dest: /tmp/demo/
       mode: 755
+    notify: 
+      - listing
+      - date
   - name: Running Script on Node
     shell: sh /root/demo.sh && date && ping -c 4 google.com
     register: output
@@ -34,7 +37,14 @@
     fetch: 
       src: /root/out.txt
       dest: out.txt
-      flat: yes  
+      flat: yes
+
+  handlers: 
+  - name: listing
+    shell: ls -ltr /tmp/demo/
+  - name: date
+    shell: date
+    
 - name: Creating User
   hosts: nodes
   
