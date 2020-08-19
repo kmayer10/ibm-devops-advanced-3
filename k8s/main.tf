@@ -14,7 +14,7 @@ variable "sg_name" {
 	default = "demo"
 }
 
-resource "aws_instance" "ansible_master" {
+resource "aws_instance" "ansible-master" {
 	ami = "ami-030ff268bd7b4e8b5"
 	instance_type = "t2.medium"
 	
@@ -27,7 +27,7 @@ resource "aws_instance" "ansible_master" {
 		}
 		
 		inline = [
-			"hostnamectl set-hostname ansible_master",
+			"hostnamectl set-hostname ansible-master",
 			"yum install -y epel-release",
 			"yum install -y ansible git",
 			"git clone https://github.com/kmayer10/ibm-devops-advanced-3.git /root/devops",
@@ -60,9 +60,9 @@ resource "aws_instance" "ansible_node" {
 		}
 		
 		inline = [
-			"hostnamectl set-hostname ansible_node",
-			"echo '${self.private_ip} ansible_node' >> /etc/hosts",
-			"echo '${aws_instance.ansible_master.private_ip} ansible_master' >> /etc/hosts"
+			"hostnamectl set-hostname ansible-node",
+			"echo '${self.private_ip} ansible-node' >> /etc/hosts",
+			"echo '${aws_instance.ansible_master.private_ip} ansible-master' >> /etc/hosts"
 		]
 	}
 	
@@ -76,8 +76,8 @@ resource "aws_instance" "ansible_node" {
 		
 		inline = [
 			"echo '${self.private_ip}' >> /etc/ansible/hosts",
-			"echo '${self.private_ip} ansible_node' >> /etc/hosts",
-			"echo '${aws_instance.ansible_master.private_ip} ansible_master' >> /etc/hosts"
+			"echo '${self.private_ip} ansible-node' >> /etc/hosts",
+			"echo '${aws_instance.ansible_master.private_ip} ansible-master' >> /etc/hosts"
 		]
 	}
 
