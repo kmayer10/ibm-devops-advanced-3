@@ -1,0 +1,7 @@
+- name: Install required dependency packages
+  yum:
+    name: 
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: latest
