@@ -19,6 +19,8 @@
       src: demo.sh
       dest: /tmp/demo/
       mode: 755
+  - name: Running Script on Node
+    shell: sh /root/demo.sh
   - name: Sending File from Node to Node
     copy:
       src: /tmp/demo/demo.sh
