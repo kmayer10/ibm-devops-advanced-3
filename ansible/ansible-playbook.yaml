@@ -1,4 +1,13 @@
 ---
+- name: Creating User
+  hosts: nodes
+  
+  tasks: 
+  - name: Creating User
+    user: 
+      name: kubeclient
+      state: present
+
 - name: Installing Packages
   hosts: all
 
