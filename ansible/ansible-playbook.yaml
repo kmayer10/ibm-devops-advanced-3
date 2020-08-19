@@ -25,7 +25,11 @@
       dest: /root/
       remote_src: yes
       mode: 755
-  
+  - name: Copying from Node to Master
+    fetch: 
+      src: /root/out.txt
+      dest: out.txt
+      flat: yes  
 - name: Creating User
   hosts: nodes
   
