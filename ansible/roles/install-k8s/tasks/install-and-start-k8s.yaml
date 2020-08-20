@@ -1,0 +1,14 @@
+  - name: installing kubernetes packges
+    yum: 
+      name: 
+        - kubelet
+        - kubeadm
+        - kubectl
+      state: latest
+      disable_excludes: kubernetes
+      
+  - name: Starting & enabling kubernetes service
+    service: 
+      name: kubelet
+      state: started
+      enabled: yes

@@ -1,0 +1,5 @@
+  - name: copy kubernetes repo
+    copy: 
+      src: kubernetes.repo
+      dest: /etc/yum.repos.d/kubernetes.repo
+      mode: 755

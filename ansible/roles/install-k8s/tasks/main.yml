@@ -1,0 +1,6 @@
+---
+# tasks file for install-k8s
+- import_tasks: configure-iptables-for-bridged-traffic.yaml
+- import_tasks: add-kubernetes-repo.yaml
+- import_tasks: setup-selinux-in-permissive-mode.yaml
+- import_tasks: install-and-start-k8s.yaml
