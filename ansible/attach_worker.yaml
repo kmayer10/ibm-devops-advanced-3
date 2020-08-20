@@ -1,0 +1,40 @@
+---
+- name: Attaching Worker Nodes
+  hosts: all
+
+  tasks: 
+
+  - name: copy join command
+    when: inventory_hostname in groups['worker']
+    copy: 
+      src: join-command.sh
+      dest: /tmp/
+      mode: 755
+
+  - name: fetching current nodes state
+    shell: kubectl get nodes
+    register: getNodes
+    when: inventory_hostname in groups['master']
+
+  - name: Delete the node if already connected
+    shell: kubectl delete node ansible-node
+    register: output
+    when: inventory_hostname in groups['master'] and getNodes.stdout.find('ansible-node') != -1
+
+  - name: setting up iptables
+    shell: echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables && kubeadm reset -f
+    when: inventory_hostname in groups['worker']
+
+  - name: Run join Command
+    script: /tmp/join-command.sh
+    register: output
+    when: inventory_hostname in groups['worker']
+
+  - name: Configuring worker Node Role
+    shell: kubectl label node ansible-node node-role.kubernetes.io/worker= && kubectl get nodes
+    when: inventory_hostname in groups['master']
+    register: output
+    
+  - name: Print Join Command output
+    debug: var=output.stdout_lines
+    
