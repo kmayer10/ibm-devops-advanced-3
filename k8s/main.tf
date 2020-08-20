@@ -18,6 +18,10 @@ resource "aws_instance" "ansible_master" {
 	ami = "ami-030ff268bd7b4e8b5"
 	instance_type = "t2.medium"
 	
+	security_groups = [
+		aws_security_group.websg.name
+	]
+	
 	provisioner "remote-exec" {
 		connection {
 			type = "ssh"
@@ -50,6 +54,10 @@ resource "aws_instance" "ansible_master" {
 resource "aws_instance" "ansible_node" {
 	ami = "ami-030ff268bd7b4e8b5"
 	instance_type = "t2.micro"
+	
+	security_groups = [
+		aws_security_group.websg.name
+	]
 	
 	provisioner "remote-exec" {
 		connection {
