@@ -24,4 +24,15 @@
     shell: kubectl apply -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml && sleep 30 && kubectl get nodes
     register: output
 
+  - name: Generate join Command
+    shell: kubeadm token create --print-join-command | grep -i kubeadm > /tmp/join-command.sh
 
+  - name: Fetching Join Command from k8s master to ansible master
+    fetch: 
+      src: /tmp/join-command.sh
+      dest: join-command.sh
+      mode: 755
+      flat: yes
+
+  - name: Printing output on console
+    debug: var=output.stdout_lines
