@@ -1,0 +1,27 @@
+---
+- name: Initialise Master
+  hosts: master
+  
+  tasks:
+  - name: Init Master
+    shell: kubeadm init --apiserver-advertise-address={{ ansible_eth0.ipv4.address }}
+    register: output
+    ignore_errors: yes
+    
+  - name: Create .kube folder
+    file: 
+      path: "{{ ansible_user_dir }}/.kube"
+      state: directory
+  
+  - name: Copy config file
+    copy: 
+      src: /etc/kubernetes/admin.conf
+      dest: "{{ ansible_user_dir }}/.kube/config"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_gid }}"
+
+  - name: configuring POD network
+    shell: kubectl apply -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml && sleep 30 && kubectl get nodes
+    register: output
+
+
